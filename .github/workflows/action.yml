@@ -44,3 +44,9 @@ jobs:
 
     - name: Update image tag for k8s deployment
       run: sed 's/0.0.2/0.0.3/g' deployment/overlay/stage/kustomization.yaml
+
+    - name: Commit and push changes
+      uses: devops-infra/action-commit-push@v0.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: Version updated
