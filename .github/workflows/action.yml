@@ -49,10 +49,10 @@ jobs:
     - name: 'build kustomize deployment file'
       uses: karancode/kustomize-github-action@master
       with:
-        kustomize_version: '3.0.0'
+        kustomize_version: '4.5.7'
         kustomize_build_dir: 'deployment/overlay/stage/'
         kustomize_comment: true
-        kustomize_output_file: "gitops/deployment_rendered.yaml"
+        kustomize_output_file: "gitops/dev_deployment_rendered.yaml"
         kustomize_build_options: "--load_restrictor none"
         enable_alpha_plugins: true
       env:

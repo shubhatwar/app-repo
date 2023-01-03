@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: development
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: node
+  name: dev-mydeploy
+  namespace: development
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: node
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: node
+  name: dev-mydeploy
+  namespace: development
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+    spec:
+      containers:
+      - image: shubhlh/app-repo:0.0.2
+        imagePullPolicy: Always
+        name: node
+        ports:
+        - containerPort: 3000
