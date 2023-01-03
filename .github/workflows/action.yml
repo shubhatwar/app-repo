@@ -39,11 +39,11 @@ jobs:
     
     - name: Build and push
       run: |
-        docker build -t shubhlh/app-repo:0.0.3 .
-        docker push shubhlh/app-repo:0.0.3
+        docker build -t shubhlh/app-repo:$GITHUB_SHA .
+        docker push shubhlh/app-repo:$GITHUB_SHA
 
     - name: Update image tag for k8s deployment
-      run: sed 's/0.0.2/0.0.3/g' deployment/overlay/stage/kustomization.yaml
+      run: sed 's/0.0.2/$GITHUB_SHA/g' deployment/overlay/stage/kustomization.yaml
 
     - name: Commit and push changes
       uses: devops-infra/action-commit-push@v0.3
