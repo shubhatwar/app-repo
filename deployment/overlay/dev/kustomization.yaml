@@ -1,0 +1,12 @@
+---
+namespace: development
+namePrefix: dev-
+resources:
+- ../../base
+- namespace.yaml
+images:
+  - name: shubhlh/app-repo
+    newTag: 0.0.1
+patchesStrategicMerge:
+- deployment.yaml
+- service.yaml

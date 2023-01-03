@@ -1,0 +1,12 @@
+---
+namespace: staging
+namePrefix: stage-
+resources:
+- ../../base
+- namespace.yaml
+images:
+  - name: shubhlh/app-repo
+    newTag: 0.0.2
+patchesStrategicMerge:
+- deployment.yaml
+- service.yaml

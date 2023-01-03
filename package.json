@@ -1,0 +1,22 @@
+{
+  "name": "app-repo",
+  "version": "0.0.1",
+  "description": "first commit for hello world app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shubhatwar/app-repo.git"
+  },
+  "author": "shubham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shubhatwar/app-repo/issues"
+  },
+  "homepage": "https://github.com/shubhatwar/app-repo#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
