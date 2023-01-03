@@ -43,13 +43,26 @@ jobs:
         docker push shubhlh/app-repo:$GITHUB_SHA
 
     - name: Update image tag for k8s deployment
-      run: sed 's/0.0.2/$GITHUB_SHA/g' deployment/overlay/stage/kustomization.yaml
+      run: |
+        sed 's/0.0.2/$GITHUB_SHA/g' deployment/overlay/stage/kustomization.yaml
+        
+    - name: 'build kustomize deployment file'
+      uses: karancode/kustomize-github-action@master
+      with:
+        kustomize_version: '3.0.0'
+        kustomize_build_dir: 'deployment/overlay/stage/'
+        kustomize_comment: true
+        kustomize_output_file: "gitops/deployment_rendered.yaml"
+        kustomize_build_options: "--load_restrictor none"
+        enable_alpha_plugins: true
+      env:
+        GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
       
     #https://github.com/marketplace/actions/github-commit-push
     - name: Commit & Push changes
       uses: actions-js/push@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.PAT }}
         message: update version and image tag
         branch: main
-        #repository: ""
+        repository: "https://github.com/shubhatwar/deploy-repo"
