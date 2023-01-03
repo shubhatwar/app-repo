@@ -44,16 +44,12 @@ jobs:
 
     - name: Update image tag for k8s deployment
       run: sed 's/0.0.2/$GITHUB_SHA/g' deployment/overlay/stage/kustomization.yaml
-
-    - name: Commit and push changes
-      uses: devops-infra/action-commit-push@master
+      
+    #https://github.com/marketplace/actions/github-commit-push
+    - name: Commit & Push changes
+      uses: actions-js/push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit_message: update version and image tag
-        target_branch: main
-    - name: Create pull request
-      uses: devops-infra/action-pull-request@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        body: "**Automated pull request**<br><br>update version and image tag"
-        title: ${{ github.event.commits[0].message }}
+        message: update version and image tag
+        branch: main
+        #repository: ""
