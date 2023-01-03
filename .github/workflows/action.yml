@@ -38,8 +38,9 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     
     - name: Build and push
-      uses: docker/build-push-action@v3
-      with:
-        push: true
-        tags: shubhlh/app-repo:0.0.3
-    
+      run: |
+        docker build -t shubhlh/app-repo:0.0.3
+        docker push shubhlh/app-repo:0.0.3
+        
+    - name: Update image tag for k8s deployment
+      run: sed 's/0.0.2/0.0.3/g' deployment/overlay/dev/kustomization.yaml
