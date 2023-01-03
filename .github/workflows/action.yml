@@ -48,5 +48,5 @@ jobs:
       with:
         context: .
         #push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ steps.meta.outputs.tags }}-${{ github.sha }}
+        tags: shubhlh/app-repo:${{ github.sha }}
         labels: ${{ steps.meta.outputs.labels }}
