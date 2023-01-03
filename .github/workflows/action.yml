@@ -37,16 +37,9 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-      with:
-        images: shubhlh/app-repo
-      
     - name: Build and push
       uses: docker/build-push-action@v3
       with:
-        context: .
-        #push: ${{ github.event_name != 'pull_request' }}
-        tags: shubhlh/app-repo:${{ github.sha }}
-        labels: ${{ steps.meta.outputs.labels }}
+        push: true
+        tags: shubhlh/app-repo:0.0.3
+    
