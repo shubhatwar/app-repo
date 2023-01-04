@@ -37,6 +37,9 @@ jobs:
     
     - name: Add SHORT_SHA env property with commit short sha
       run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
+
+    - name: Test
+      run: echo ${{ env.SHORT_SHA }}
       
     - name: Log in to Docker Hub
       uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
@@ -46,27 +49,26 @@ jobs:
     
     - name: Build and push
       run: |
-        docker build --no-cache -t shubhlh/app-repo:latest .
-        docker push shubhlh/app-repo:latest
+        docker build --no-cache -t shubhlh/app-repo:${{ env.SHORT_SHA }} .
+        docker push shubhlh/app-repo:${{ env.SHORT_SHA }}
 
     # - name: Update image tag for k8s deployment
     #   run: |
-    #     sed -i 's/latest/${SHORT_SHA}/g' deployment/overlay/stage/kustomization.yaml
+    #     sed -i 's/latest/${{ env.SHORT_SHA }}/g' deployment/overlay/stage/kustomization.yaml
         
     - name: 'build kustomize deployment file'
+      if: github.event.pull_request.merged == true
       uses: karancode/kustomize-github-action@master
       with:
         kustomize_version: '4.5.7'
         kustomize_build_dir: 'deployment/overlay/stage/'
         kustomize_comment: true
         kustomize_output_file: "gitops/dev_deployment_rendered.yaml"
-        #kustomize_build_options: "--load_restrictor none"
-        #enable_alpha_plugins: true
       env:
         GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_ACCESS_TOKEN }}
         
     - name: Commit files
-      #if: github.event.pull_request.merged == true
+      if: github.event.pull_request.merged == true
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
@@ -74,7 +76,7 @@ jobs:
         git commit -a -m "update image tag with latest"
         
     - name: Push changes
-      #if: github.event.pull_request.merged == true
+      if: github.event.pull_request.merged == true
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
