@@ -36,7 +36,7 @@ spec:
         app: node
     spec:
       containers:
-      - image: shubhlh/app-repo:${SHORT_SHA}
+      - image: shubhlh/app-repo:latest
         imagePullPolicy: Always
         name: node
         ports:
