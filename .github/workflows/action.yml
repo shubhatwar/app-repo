@@ -46,12 +46,12 @@ jobs:
     
     - name: Build and push
       run: |
-        docker build -t shubhlh/app-repo:${SHORT_SHA} .
-        docker push shubhlh/app-repo:${SHORT_SHA}
+        docker build --no-cache -t shubhlh/app-repo:latest .
+        docker push shubhlh/app-repo:latest
 
-    - name: Update image tag for k8s deployment
-      run: |
-        sed -i 's/latest/${SHORT_SHA}/g' deployment/overlay/stage/kustomization.yaml
+    # - name: Update image tag for k8s deployment
+    #   run: |
+    #     sed -i 's/latest/${SHORT_SHA}/g' deployment/overlay/stage/kustomization.yaml
         
     - name: 'build kustomize deployment file'
       uses: karancode/kustomize-github-action@master

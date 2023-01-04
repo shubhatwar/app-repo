@@ -6,7 +6,7 @@ resources:
 - namespace.yaml
 images:
   - name: shubhlh/app-repo
-    newTag: 0.0.1
+    newTag: latest
 patchesStrategicMerge:
 - deployment.yaml
 - service.yaml

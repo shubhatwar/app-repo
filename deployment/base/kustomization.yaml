@@ -8,5 +8,5 @@ resources:
 - service.yaml
 images:
   - name: shubhlh/app-repo
-    newTag: 0.0.3
+    newTag: latest
 
