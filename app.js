@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.get('/', function(req,res){
-        res.send("Hello World,Github action commit");
+        res.send("Hello World,with latest tag");
 });
 
 server.listen(3000, function(){

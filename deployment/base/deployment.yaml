@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: node
-        image: shubhlh/app-repo:0.0.3
+        image: shubhlh/app-repo:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
